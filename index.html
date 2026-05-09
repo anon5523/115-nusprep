@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>臺南市115年護理人員甄選備考總部</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fafaf7; --surface:#fff; --surface-2:#f1efe8;
+  --text:#2c2c2a; --text-2:#5f5e5a; --text-3:#888780;
+  --border:rgba(0,0,0,0.08); --border-2:rgba(0,0,0,0.15);
+  --primary:#7F77DD; --primary-bg:#EEEDFE; --primary-text:#3C3489;
+  --success:#1D9E75; --success-bg:#E1F5EE; --success-text:#085041;
+  --warning:#BA7517; --warning-bg:#FAEEDA; --warning-text:#633806;
+  --danger:#E24B4A; --danger-bg:#FCEBEB; --danger-text:#791F1F;
+  --pink:#D4537E; --pink-bg:#FBEAF0; --pink-text:#72243E;
+  --teal:#1D9E75; --teal-bg:#E1F5EE;
+  --radius:8px; --radius-lg:12px;
+  --shadow:0 1px 3px rgba(0,0,0,0.04);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1a1a18; --surface:#23231f; --surface-2:#2c2c28;
+    --text:#e8e6dc; --text-2:#b4b2a9; --text-3:#888780;
+    --border:rgba(255,255,255,0.08); --border-2:rgba(255,255,255,0.15);
+    --primary-bg:rgba(127,119,221,0.15);
+    --success-bg:rgba(29,158,117,0.15);
+    --warning-bg:rgba(186,117,23,0.15);
+    --danger-bg:rgba(226,75,74,0.15);
+    --pink-bg:rgba(212,83,126,0.15);
+    --teal-bg:rgba(29,158,117,0.15);
+  }
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px}
+.container{max-width:980px;margin:0 auto;padding:1rem}
+
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:0.5px solid var(--border);backdrop-filter:blur(10px);background:rgba(250,250,247,0.92)}
+@media (prefers-color-scheme: dark){.topbar{background:rgba(26,26,24,0.92)}}
+.topbar-inner{max-width:980px;margin:0 auto;padding:10px 1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:14px;font-weight:600;color:var(--text)}
+.brand .badge-mini{font-size:11px;background:var(--primary-bg);color:var(--primary-text);padding:2px 8px;border-radius:6px;margin-left:6px;font-weight:500}
+.nav-tabs{display:flex;gap:4px;flex:1;overflow-x:auto;justify-content:flex-end}
+.nav-tab{padding:6px 12px;font-size:13px;border:none;background:transparent;color:var(--text-2);cursor:pointer;border-radius:6px;white-space:nowrap;font-weight:500;transition:all .15s}
+.nav-tab:hover{background:var(--surface-2);color:var(--text)}
+.nav-tab.active{background:var(--primary-bg);color:var(--primary-text)}
+
+/* Hero countdown */
+.hero{text-align:center;padding:1.5rem 0 1rem}
+.hero h1{font-size:22px;font-weight:600;margin-bottom:6px}
+.hero p{color:var(--text-2);font-size:13px}
+.countdown{display:flex;justify-content:center;gap:10px;margin-top:1rem;flex-wrap:wrap}
+.cd-box{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;min-width:80px}
+.cd-box .num{font-size:30px;font-weight:600;color:var(--primary);line-height:1}
+.cd-box .lbl{font-size:11px;color:var(--text-2);margin-top:4px;letter-spacing:.05em}
+.cd-box.urgent .num{color:var(--danger)}
+.exam-info{font-size:12px;color:var(--text-2);margin-top:10px}
+
+/* Sections */
+.section{display:none;padding:1.5rem 0}
+.section.active{display:block}
+.sec-title{font-size:18px;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.sec-sub{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:500}
+
+/* Cards */
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:12px}
+.card h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.grid{display:grid;gap:10px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+
+/* Stat cards */
+.stat-card{background:var(--surface-2);padding:14px;border-radius:var(--radius);text-align:center}
+.stat-card .v{font-size:22px;font-weight:600}
+.stat-card .l{font-size:11px;color:var(--text-2);margin-top:2px}
+
+/* Quick navigation cards */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:1rem}
+.quick-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;cursor:pointer;transition:all .15s;text-align:left}
+.quick-card:hover{transform:translateY(-1px);border-color:var(--border-2);box-shadow:var(--shadow)}
+.quick-card .icon{font-size:22px;margin-bottom:8px;display:block}
+.quick-card h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.quick-card p{font-size:12px;color:var(--text-2)}
+
+/* Lazy-summary */
+.lp-grid{display:flex;flex-direction:column;gap:8px}
+.lp-row{display:flex;gap:10px;padding:10px 12px;background:var(--surface-2);border-radius:var(--radius)}
+.lp-row .ico{flex-shrink:0;color:var(--primary);font-size:16px}
+.lp-row .body{flex:1;font-size:13px}
+.lp-row .body strong{font-weight:600;color:var(--text)}
+.lp-row .body span{color:var(--text-2);display:block;margin-top:2px;font-size:12px}
+
+/* Timeline */
+.timeline{position:relative;padding-left:20px;margin-top:0.5rem}
+.timeline::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--border-2)}
+.tl-item{position:relative;padding-bottom:14px}
+.tl-item::before{content:'';position:absolute;left:-19px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid var(--bg)}
+.tl-item.urgent::before{background:var(--danger)}
+.tl-item.success::before{background:var(--success)}
+.tl-item .date{font-size:11px;color:var(--text-2);font-weight:600;margin-bottom:2px;letter-spacing:.05em}
+.tl-item .title{font-size:14px;font-weight:600}
+.tl-item .desc{font-size:12px;color:var(--text-2);margin-top:2px}
+
+/* Study plan */
+.week{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;overflow:hidden}
+.week-h{padding:12px 14px;display:flex;gap:10px;align-items:center;cursor:pointer;user-select:none}
+.week-h:hover{background:var(--surface-2)}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0}
+.tag-r1{background:var(--primary-bg);color:var(--primary-text)}
+.tag-r2{background:var(--success-bg);color:var(--success-text)}
+.tag-final{background:var(--warning-bg);color:var(--warning-text)}
+.week-h .t{flex:1;font-size:14px;font-weight:600}
+.week-h .d{font-size:12px;color:var(--text-2)}
+.week-h .ch{transition:transform .2s;color:var(--text-3);font-size:18px}
+.week.open .ch{transform:rotate(180deg)}
+.week-b{display:none;padding:0 14px 14px;border-top:0.5px solid var(--border)}
+.week.open .week-b{display:block}
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0}
+.day{background:var(--surface-2);padding:8px 4px;border-radius:6px;text-align:center;font-size:11px;position:relative;cursor:pointer;transition:all .15s}
+.day:hover{background:var(--border-2)}
+.day .d{font-weight:600;color:var(--text-2);font-size:10px;margin-bottom:3px}
+.day .t{color:var(--text);line-height:1.3}
+.day .dt{position:absolute;top:2px;right:4px;font-size:9px;color:var(--text-3)}
+.day.done{background:var(--success-bg);opacity:0.65}
+.day.done::after{content:'✓';position:absolute;top:4px;left:5px;color:var(--success);font-weight:700;font-size:11px}
+.day.today{box-shadow:0 0 0 2px var(--primary);font-weight:700}
+.day.rest{opacity:0.6}
+.tasks{margin-top:10px}
+.task{display:flex;gap:8px;padding:6px 0;font-size:13px;align-items:flex-start}
+.task .i{color:var(--primary);flex-shrink:0;margin-top:1px}
+.tip{background:var(--primary-bg);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--primary-text);margin-top:8px;display:flex;gap:6px}
+
+/* Quiz */
+.quiz-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.quiz-controls select,.quiz-controls input,.btn{padding:8px 14px;border:0.5px solid var(--border-2);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;font-family:inherit;cursor:pointer;transition:all .15s}
+.btn:hover{background:var(--surface-2)}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+.btn-primary:hover{background:#6c64c8;color:#fff}
+.btn-success{background:var(--success);color:#fff;border-color:var(--success)}
+.btn-danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+
+.quiz-question{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
+.q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;color:var(--text-2)}
+.q-tag{display:inline-block;background:var(--primary-bg);color:var(--primary-text);padding:2px 8px;border-radius:6px;font-weight:500;margin-right:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px;line-height:1.65}
+.q-options{display:flex;flex-direction:column;gap:6px}
+.q-option{padding:10px 14px;background:var(--surface-2);border:1px solid transparent;border-radius:var(--radius);cursor:pointer;font-size:13px;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.q-option:hover:not(.disabled){background:var(--border-2)}
+.q-option .letter{font-weight:700;color:var(--text-2);min-width:20px}
+.q-option.selected{border-color:var(--primary);background:var(--primary-bg);color:var(--primary-text)}
+.q-option.correct{background:var(--success-bg);border-color:var(--success);color:var(--success-text)}
+.q-option.wrong{background:var(--danger-bg);border-color:var(--danger);color:var(--danger-text)}
+.q-option.disabled{cursor:default}
+.q-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.q-explain{margin-top:14px;padding:12px 14px;background:var(--success-bg);border-radius:var(--radius);font-size:13px;color:var(--success-text);display:none}
+.q-explain.show{display:block}
+.q-explain.wrong{background:var(--danger-bg);color:var(--danger-text)}
+.score-bar{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.score-bar .stats{display:flex;gap:18px;font-size:13px}
+.score-bar .stats span strong{font-weight:700;color:var(--primary);font-size:16px}
+.bookmark{cursor:pointer;font-size:18px;color:var(--text-3)}
+.bookmark.active{color:var(--warning)}
+
+/* Print */
+.print-area{display:none}
+@media print{
+  body{background:#fff;color:#000}
+  .topbar,.no-print,.section:not(.print-section){display:none !important}
+  .section.print-section{display:block !important;padding:0}
+  .container{max-width:none;padding:0;margin:0}
+  .card,.week,.quiz-question{break-inside:avoid;page-break-inside:avoid}
+  .print-area{display:block}
+  .week-b{display:block !important}
+  .day-grid{display:grid !important}
+  @page{size:A4;margin:1.5cm}
+}
+.print-checkbox{display:inline-block;width:14px;height:14px;border:1.5px solid #555;margin-right:6px;vertical-align:middle;border-radius:2px}
+
+/* Misc */
+.warn-box{background:var(--warning-bg);color:var(--warning-text);padding:12px 14px;border-radius:var(--radius-lg);font-size:13px;display:flex;gap:8px;align-items:flex-start;margin:1rem 0}
+.link{color:var(--primary);text-decoration:none;border-bottom:1px solid var(--primary);font-weight:500}
+.link:hover{opacity:0.8}
+.policy-list{display:flex;flex-direction:column;gap:6px}
+.policy-item{padding:10px 12px;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);font-size:13px}
+.policy-item a{color:var(--primary);text-decoration:none;font-weight:500}
+.policy-item a:hover{text-decoration:underline}
+.policy-item .label{font-size:11px;color:var(--text-2);margin-top:2px}
+.note{background:var(--surface-2);padding:10px 12px;border-radius:var(--radius);font-size:12px;color:var(--text-2);margin-bottom:1rem}
+.foot{text-align:center;color:var(--text-3);font-size:11px;padding:2rem 0 1rem}
+.update-stamp{font-size:11px;color:var(--text-3);text-align:right;margin-bottom:0.5rem}
+hr{border:none;height:0.5px;background:var(--border);margin:1rem 0}
+
+.year-pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;background:var(--primary-bg);color:var(--primary-text);margin-right:4px}
+.bookmark-list{display:flex;flex-direction:column;gap:6px}
+.bookmark-list .empty{text-align:center;color:var(--text-3);padding:2rem;font-size:13px}
+
+/* Dialog for taking exam */
+.exam-summary{padding:2rem;text-align:center}
+.exam-summary .big{font-size:48px;font-weight:700;color:var(--primary)}
+.exam-summary .lbl{font-size:13px;color:var(--text-2);margin-top:6px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">護理甄選備考總部 <span class="badge-mini">115年</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-sec="dashboard">總覽</button>
+      <button class="nav-tab" data-sec="brochure">簡章</button>
+      <button class="nav-tab" data-sec="cheat">懶人包</button>
+      <button class="nav-tab" data-sec="plan">讀書計畫</button>
+      <button class="nav-tab" data-sec="quiz">考古題庫</button>
+      <button class="nav-tab" data-sec="policy">時事政策</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Dashboard -->
+  <section id="dashboard" class="section active">
+    <div class="hero">
+      <h1>距離 115 年護理人員甄選筆試</h1>
+      <p>考試日：2026 年 6 月 28 日（星期日）下午 3:00</p>
+      <div class="countdown" id="countdown"></div>
+      <p class="exam-info">📍 試場：臺南市私立中信國際高級中等學校（新營區大同路 86 號）</p>
+    </div>
+
+    <div class="quick-grid">
+      <button class="quick-card" onclick="goSec('brochure')">
+        <span class="icon">📋</span>
+        <h4>甄選簡章</h4>
+        <p>名額、資格、報名方式完整資訊</p>
+      </button>
+      <button class="quick-card" onclick="goSec('cheat')">
+        <span class="icon">⚡</span>
+        <h4>懶人包</h4>
+        <p>核心重點一次掌握</p>
+      </button>
+      <button class="quick-card" onclick="goSec('plan')">
+        <span class="icon">📅</span>
+        <h4>讀書計畫</h4>
+        <p>50天兩輪複習，可勾選追蹤進度</p>
+      </button>
+      <button class="quick-card" onclick="goSec('quiz')">
+        <span class="icon">📝</span>
+        <h4>考古題庫</h4>
+        <p>近5年題目，隨機抽考、收藏錯題</p>
+      </button>
+      <button class="quick-card" onclick="goSec('policy')">
+        <span class="icon">🌐</span>
+        <h4>時事政策</h4>
+        <p>衛福部官方公告快速連結</p>
+      </button>
+      <button class="quick-card" onclick="window.print()">
+        <span class="icon">🖨️</span>
+        <h4>列印讀書計畫</h4>
+        <p>A4列印版，紙本打勾追蹤</p>
+      </button>
+    </div>
+
+    <div class="card" style="margin-top:1.5rem">
+      <h3>📊 學習進度</h3>
+      <div class="grid grid-4" style="margin-top:10px">
+        <div class="stat-card"><div class="v" id="stat-days">0</div><div class="l">已執行天數</div></div>
+        <div class="stat-card"><div class="v" id="stat-tasks">0</div><div class="l">已完成項目</div></div>
+        <div class="stat-card"><div class="v" id="stat-quiz">0</div><div class="l">已做題數</div></div>
+        <div class="stat-card"><div class="v" id="stat-acc">0%</div><div class="l">答對率</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brochure -->
+  <section id="brochure" class="section">
+    <div class="sec-title">📋 115 年護理人員公開甄選簡章</div>
+
+    <div class="card">
+      <h3>甄選名額</h3>
+      <div class="grid grid-2" style="margin-top:8px">
+        <div class="lp-row"><span class="ico">👥</span><div class="body"><strong>現職公職人員組</strong><span>正取 9 名・候補 18 名</span></div></div>
+        <div class="lp-row"><span class="ico">👥</span><div class="body"><strong>非現職公職人員組</strong><span>正取 18 名・候補 36 名</span></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📅 重要時程</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="date">2026/6/4 – 6/7</div><div class="title">現場報名</div><div class="desc">上午 9 時至下午 4 時（含假日），衛生局東興辦公室（新營區東興路 163 號）</div></div>
+        <div class="tl-item"><div class="date">2026/6/25</div><div class="title">試場配置圖公告</div><div class="desc">衛生局網站「護理人員甄試專區」</div></div>
+        <div class="tl-item urgent"><div class="date">2026/6/28（日）下午 3:00–4:00</div><div class="title">筆試（核心日期）</div><div class="desc">中信國際高中・最晚 2:45 入場・3:15 後不得入場</div></div>
+        <div class="tl-item"><div class="date">2026/6/28 晚 11:30 後</div><div class="title">成績公告</div><div class="desc">衛生局網站</div></div>
+        <div class="tl-item"><div class="date">2026/6/29 下午 5 時前</div><div class="title">成績複查截止</div><div class="desc">傳真或 e-mail 提出</div></div>
+        <div class="tl-item success"><div class="date">2026/7/9（四）9:30</div><div class="title">公開選填志願</div><div class="desc">錄取者報到並選填衛生所</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>✅ 資格條件</h3>
+      <div class="lp-grid">
+        <div class="lp-row"><span class="ico">🎓</span><div class="body"><strong>學歷</strong><span>公私立高中（職）以上學校護理、護理助產、助產相關科系畢業</span></div></div>
+        <div class="lp-row"><span class="ico">📜</span><div class="body"><strong>考試</strong><span>領有護士或護理師證書，並具執業登記資格</span></div></div>
+        <div class="lp-row"><span class="ico">🏛️</span><div class="body"><strong>現職公職組</strong><span>限現任公職且銓敘有案者（不含臺南市所屬機關）</span></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 計分方式</h3>
+      <div class="grid grid-2" style="margin-top:8px">
+        <div class="stat-card"><div class="v">30%</div><div class="l">資績審查</div></div>
+        <div class="stat-card"><div class="v">70%</div><div class="l">筆試（50 題單選）</div></div>
+      </div>
+      <table style="width:100%;margin-top:14px;font-size:13px;border-collapse:collapse">
+        <tr style="border-bottom:0.5px solid var(--border)"><td style="padding:8px 0;color:var(--text-2)">考試</td><td style="text-align:right;font-weight:500">最高 40 分</td></tr>
+        <tr style="border-bottom:0.5px solid var(--border)"><td style="padding:8px 0;color:var(--text-2)">學歷</td><td style="text-align:right;font-weight:500">最高 30 分</td></tr>
+        <tr style="border-bottom:0.5px solid var(--border)"><td style="padding:8px 0;color:var(--text-2)">年資/經歷</td><td style="text-align:right;font-weight:500">最高 10–20 分</td></tr>
+        <tr style="border-bottom:0.5px solid var(--border)"><td style="padding:8px 0;color:var(--text-2)">語文能力（英檢初級1分、中級2分、中高級以上4分）</td><td style="text-align:right;font-weight:500">最高 5 分</td></tr>
+        <tr><td style="padding:8px 0;color:var(--text-2)">訓練進修（近6年繼續教育積分）</td><td style="text-align:right;font-weight:500">最高 5 分</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📝 報名應繳資料（核心）</h3>
+      <div class="grid grid-2">
+        <div>
+          <ul style="list-style:none;padding:0;font-size:13px">
+            <li style="padding:4px 0">📷 2吋照片 × 2 張（1年內）</li>
+            <li style="padding:4px 0">🆔 身分證正反面影本 + 健保卡</li>
+            <li style="padding:4px 0">📜 護理師/護士證書（正反面）</li>
+            <li style="padding:4px 0">📜 考試及格證書（考試院核發）</li>
+          </ul>
+        </div>
+        <div>
+          <ul style="list-style:none;padding:0;font-size:13px">
+            <li style="padding:4px 0">🎓 畢業證書</li>
+            <li style="padding:4px 0">📄 服務經歷證明 + 執業登記資料</li>
+            <li style="padding:4px 0">🏥 繼續教育積分證明（109/6/1–115/5/31）</li>
+            <li style="padding:4px 0">📋 履歷表（簡章第 11 頁）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box"><span>⚠️</span><div>簡章原文 PDF 與最新異動請查閱：<a class="link" href="https://health.tainan.gov.tw/list.asp?orcaid=49027783-987D-4D70-A08E-2FB99422F8E0" target="_blank">臺南市衛生局護理人員甄試專區</a></div></div>
+  </section>
+
+  <!-- Cheat Sheet -->
+  <section id="cheat" class="section">
+    <div class="sec-title">⚡ 簡章懶人包</div>
+    <div class="note">把簡章的核心重點濃縮為一頁：時間、地點、要帶什麼、考什麼、怎麼計分。</div>
+
+    <div class="card">
+      <div class="grid grid-3">
+        <div class="stat-card"><div class="v">🗓️</div><div class="l">2026/6/28 (日)</div></div>
+        <div class="stat-card"><div class="v">⏰</div><div class="l">下午 3:00–4:00</div></div>
+        <div class="stat-card"><div class="v">📚</div><div class="l">50 題單選</div></div>
+        <div class="stat-card"><div class="v">⏱️</div><div class="l">60 分鐘</div></div>
+        <div class="stat-card"><div class="v">📍</div><div class="l">中信國際高中</div></div>
+        <div class="stat-card"><div class="v">✏️</div><div class="l">2B 鉛筆答題</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 五大核心考試主題（出題頻率排序）</h3>
+      <div class="lp-grid">
+        <div class="lp-row"><span class="ico">①</span><div class="body"><strong>傳染病防治＋預防接種（每年8–12題）</strong><span>腸病毒、登革熱、結核、COVID-19、流感、肺炎鏈球菌、HPV、MMR、B肝、狂犬病暴露分級</span></div></div>
+        <div class="lp-row"><span class="ico">②</span><div class="body"><strong>長照2.0＋失智症（每年5–7題）</strong><span>服務對象、ABCD四級、CMS評估、巴氏量表、失智十大警訊、ICOPE六項評估</span></div></div>
+        <div class="lp-row"><span class="ico">③</span><div class="body"><strong>健康促進＋衛教模式（每年4–6題）</strong><span>三段五級、健康信念模式、跨理論模式、PRECEDE-PROCEED、渥太華憲章</span></div></div>
+        <div class="lp-row"><span class="ico">④</span><div class="body"><strong>流行病學（每年3–5題）</strong><span>敏感度/特異度、病例對照/世代/橫斷研究、相對危險性、率與比、生命統計</span></div></div>
+        <div class="lp-row"><span class="ico">⑤</span><div class="body"><strong>癌症篩檢＋成人保健（每年3–4題）</strong><span>四癌篩檢年齡與頻率、肺癌LDCT、880方案、代謝症候群、糖尿病ABCDEFG</span></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🚨 必背數字（高頻考點）</h3>
+      <div class="grid grid-2">
+        <div class="lp-row"><span class="ico">📅</span><div class="body"><strong>傳染病通報時效</strong><span>第一類24小時、第二類24小時、第三類72小時</span></div></div>
+        <div class="lp-row"><span class="ico">💧</span><div class="body"><strong>洗牙補助</strong><span>13歲以上每 6 個月 1 次</span></div></div>
+        <div class="lp-row"><span class="ico">🩺</span><div class="body"><strong>成人健檢880方案</strong><span>40-64歲每3年、65歲以上每年</span></div></div>
+        <div class="lp-row"><span class="ico">👶</span><div class="body"><strong>產檢補助</strong><span>14次產檢、5次超音波、24-28週GDM</span></div></div>
+        <div class="lp-row"><span class="ico">🦷</span><div class="body"><strong>大腸癌篩檢</strong><span>45-74歲每2年、40-44歲家族史每2年</span></div></div>
+        <div class="lp-row"><span class="ico">🫁</span><div class="body"><strong>肺癌LDCT</strong><span>家族史男50/女45-74、重度吸菸50-74</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Study plan -->
+  <section id="plan" class="section">
+    <div class="sec-title">📅 50 天讀書計畫（兩輪複習）</div>
+    <div class="note">點擊每日格子即可標記完成。從 2026/5/11（一）開始實施，計畫由 Claude 為你客製。</div>
+
+    <div id="plan-container"></div>
+
+    <div class="warn-box no-print"><span>🖨️</span><div>建議將此計畫列印一份貼在書桌前，<button class="btn btn-primary" style="margin-left:8px" onclick="window.print()">列印 A4 計畫表</button></div></div>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" class="section">
+    <div class="sec-title">📝 考古題庫</div>
+    <div class="note">資料來源：臺南市衛生局歷屆甄選試題（已收錄 109、111、112、113、114 年共 250 題）。其他年份請至 <a class="link" href="https://health.tainan.gov.tw/list.asp?orcaid=49027783-987D-4D70-A08E-2FB99422F8E0" target="_blank">衛生局網站</a> 下載。</div>
+
+    <div class="quiz-controls">
+      <select id="qz-year"><option value="all">全部年份</option><option value="114">114年</option><option value="113">113年</option><option value="112">112年</option><option value="111">111年</option><option value="109">109年</option></select>
+      <select id="qz-topic"></select>
+      <select id="qz-mode"><option value="random">隨機抽題</option><option value="sequential">依序作答</option><option value="bookmarked">只看收藏題</option><option value="wrong">只看錯題</option></select>
+      <input type="number" id="qz-count" value="10" min="1" max="50" style="width:80px" placeholder="題數">
+      <button class="btn btn-primary" onclick="startQuiz()">開始作答</button>
+      <button class="btn" onclick="resetQuizStats()">重置紀錄</button>
+    </div>
+
+    <div id="quiz-area"></div>
+  </section>
+
+  <!-- Policy -->
+  <section id="policy" class="section">
+    <div class="sec-title">🌐 時事政策即時查詢</div>
+    <div class="update-stamp">頁面建立日期：2026/05/09</div>
+    <div class="note">GitHub Pages 為靜態網頁，無法主動抓取最新資訊。以下為衛福部各業務司最重要的官方公告連結，<strong>建議考前 2 週內每幾天逐一檢視一次</strong>，掌握當年度政策變動。</div>
+
+    <div class="card">
+      <h3>🦠 傳染病防治（出題最高頻）</h3>
+      <div class="policy-list">
+        <div class="policy-item"><a href="https://www.cdc.gov.tw/" target="_blank">衛福部疾病管制署 →</a><div class="label">最新疫情、預防接種計畫、傳染病通報規定</div></div>
+        <div class="policy-item"><a href="https://www.cdc.gov.tw/Category/MPage/E0lORssszIfWiSCx-FzDpw" target="_blank">兒童預防接種時程表 →</a><div class="label">每年微調，必看</div></div>
+        <div class="policy-item"><a href="https://www.cdc.gov.tw/Category/Page/SrgEFOIxe8gB3uA7-XjPCw" target="_blank">公費流感疫苗接種計畫 →</a><div class="label">當年度對象與時程</div></div>
+        <div class="policy-item"><a href="https://www.cdc.gov.tw/Category/MPage/Lr34_a0w-Nkh4yJBLCWobg" target="_blank">登革熱專區 →</a><div class="label">病媒蚊指數、防治政策</div></div>
+        <div class="policy-item"><a href="https://www.cdc.gov.tw/Category/Page/ItDb2qvQDp3MBPYXdqiOdg" target="_blank">COVID-19 專區 →</a><div class="label">最新疫苗政策、適用對象</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>👵 長照與中老年保健</h3>
+      <div class="policy-list">
+        <div class="policy-item"><a href="https://1966.gov.tw/" target="_blank">長期照顧管理中心（1966） →</a><div class="label">長照2.0服務、CMS評估</div></div>
+        <div class="policy-item"><a href="https://dep.mohw.gov.tw/dolthc/np-471-123.html" target="_blank">衛福部長期照顧司 →</a><div class="label">最新長照政策、給付辦法修正</div></div>
+        <div class="policy-item"><a href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=43" target="_blank">國健署高齡友善 →</a><div class="label">ICOPE六項、長者量六力、失智症十大警訊</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🩺 慢性病、癌症篩檢、成人保健</h3>
+      <div class="policy-list">
+        <div class="policy-item"><a href="https://www.hpa.gov.tw/" target="_blank">衛福部國民健康署 →</a><div class="label">癌症篩檢、健康檢查、菸害防制等</div></div>
+        <div class="policy-item"><a href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=211" target="_blank">癌症防治專區 →</a><div class="label">四癌篩檢、肺癌LDCT</div></div>
+        <div class="policy-item"><a href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=4030" target="_blank">代謝症候群防治 →</a><div class="label">判定標準、ABCDEFG管理</div></div>
+        <div class="policy-item"><a href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=189" target="_blank">婦幼健康 →</a><div class="label">產檢、優生保健、新生兒篩檢</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏛️ 法規與行政</h3>
+      <div class="policy-list">
+        <div class="policy-item"><a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0040001" target="_blank">護理人員法 →</a><div class="label">執業、護理機構、罰則</div></div>
+        <div class="policy-item"><a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0060001" target="_blank">職業安全衛生法 →</a><div class="label">第19、22、37條常考</div></div>
+        <div class="policy-item"><a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050001" target="_blank">傳染病防治法 →</a><div class="label">通報時效與分類</div></div>
+        <div class="policy-item"><a href="https://health.tainan.gov.tw/" target="_blank">臺南市政府衛生局 →</a><div class="label">當年度市政重點、本市專案</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔍 搜尋最新資訊</h3>
+      <div class="lp-grid">
+        <div class="lp-row"><span class="ico">💡</span><div class="body"><strong>每年都會考的「當年度政策」</strong><span>建議考前 2 週用 Google 搜尋「115 衛福部 預防接種」、「115 國健署 癌症篩檢」、「115 長照 給付辦法」等關鍵字</span></div></div>
+        <div class="lp-row"><span class="ico">🤖</span><div class="body"><strong>讓 Claude 幫你摘要</strong><span>把最新公告 PDF 或網頁丟給 Claude，請它幫你整理成 5–10 條重點背誦清單</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">© 2026 護理甄選備考總部 · 此頁為個人學習工具，內容僅供參考，正式資訊以衛生局公告為準</div>
+</div>
+
+<script src="questions_data.js"></script>
+<script>
+const STORAGE_KEY='ntc_nursing_2026';
+let store={planDays:{},quizAnswers:{},bookmarks:[],wrongQuestions:[]};
+try{const s=localStorage.getItem(STORAGE_KEY);if(s)store={...store,...JSON.parse(s)};}catch(e){}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(store));}catch(e){}}
+
+const EXAM_DATE=new Date('2026-06-28T15:00:00');
+const PLAN_START=new Date('2026-05-11T00:00:00');
+
+function updateCountdown(){
+  const now=new Date();
+  const diff=EXAM_DATE-now;
+  const days=Math.max(0,Math.floor(diff/86400000));
+  const hours=Math.max(0,Math.floor((diff%86400000)/3600000));
+  const mins=Math.max(0,Math.floor((diff%3600000)/60000));
+  const cls=days<10?'urgent':'';
+  document.getElementById('countdown').innerHTML=
+    '<div class="cd-box '+cls+'"><div class="num">'+days+'</div><div class="lbl">天</div></div>'+
+    '<div class="cd-box"><div class="num">'+hours+'</div><div class="lbl">小時</div></div>'+
+    '<div class="cd-box"><div class="num">'+mins+'</div><div class="lbl">分鐘</div></div>';
+}
+updateCountdown();setInterval(updateCountdown,60000);
+
+document.querySelectorAll('.nav-tab').forEach(b=>b.addEventListener('click',e=>goSec(e.target.dataset.sec)));
+function goSec(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('.nav-tab[data-sec="'+id+'"]').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+const PLAN=[
+  {tag:'r1',label:'第1週',title:'Ch04 健康促進 ＋ Ch05 社區健康',start:'2026-05-11',days:[
+    {d:'5/11 一',t:'Ch04 健康促進概念、健康信念模式',rest:false},
+    {d:'5/12 二',t:'Ch04 跨理論模式、PRECEDE-PROCEED',rest:false},
+    {d:'5/13 三',t:'Ch04 衛教原則與評價、護理師角色',rest:false},
+    {d:'5/14 四',t:'Ch04 章末題庫練習',rest:false},
+    {d:'5/15 五',t:'Ch05 社區概念、健康評估模式',rest:false},
+    {d:'5/16 六',t:'Ch05 社區護理過程、健康營造、心理衛生',rest:false},
+    {d:'5/17 日',t:'兩章複習＋題庫錯題回查',rest:false}
+  ],tasks:['熟讀健康促進五大行動綱領（渥太華憲章）','背熟跨理論模式 6 階段','社區評估的 5 種方法（含擋風玻璃）'],tip:'三段五級 + 健康信念模式 + 跨理論模式三大模型，幾乎每年必出 2-3 題，這週是基礎中的基礎'},
+
+  {tag:'r1',label:'第2週',title:'Ch06 長期照護 ＋ Ch07 家庭護理',start:'2026-05-18',days:[
+    {d:'5/18 一',t:'Ch06 長照2.0服務對象、ABCD四級制',rest:false},
+    {d:'5/19 二',t:'Ch06 居家、社區、機構服務模式',rest:false},
+    {d:'5/20 三',t:'Ch06 CMS評估、Barthel、IADL',rest:false},
+    {d:'5/21 四',t:'Ch06 章末題庫練習',rest:false},
+    {d:'5/22 五',t:'Ch07 家庭護理過程、家庭評估工具',rest:false},
+    {d:'5/23 六',t:'Ch07 家庭訪視流程（衛生所核心業務）',rest:false},
+    {d:'5/24 日',t:'兩章複習＋整理長照核心數字',rest:false}
+  ],tasks:['長照2.0四類服務對象（哪些不符合）','CMS等級對應的給付額度','家庭評估工具：APGAR、家系圖、生態圖'],tip:'長照2.0「哪些人不符合」幾乎每年都出，112年第1題、114年第14題都是。'},
+
+  {tag:'r1',label:'第3週',title:'Ch08 婦幼健康 ＋ Ch09 中老年慢性病',start:'2026-05-25',days:[
+    {d:'5/25 一',t:'Ch08 嬰幼兒健康、發展里程碑',rest:false},
+    {d:'5/26 二',t:'Ch08 優生保健、產檢補助',rest:false},
+    {d:'5/27 三',t:'Ch08 婦女、育齡、更年期保健',rest:false},
+    {d:'5/28 四',t:'Ch08 章末題庫＋婦幼考點整理',rest:false},
+    {d:'5/29 五',t:'Ch09 中老年現況、代謝症候群',rest:false},
+    {d:'5/30 六',t:'Ch09 高血壓、糖尿病、失智症防治',rest:false},
+    {d:'5/31 日',t:'Ch09 章末題庫＋中老年複習',rest:false}
+  ],tasks:['新生兒篩檢項目','糖尿病 ABCDEFG 自我控制','代謝症候群5項判定標準（114年第44題）','失智症十大警訊（114年第15題）'],tip:'代謝症候群數字（腰圍、血糖、HDL、血壓）建議用便利貼貼在浴室鏡子上每天看'},
+
+  {tag:'r1',label:'第4週',title:'Ch10 傳染病防治（最重要）',start:'2026-06-01',days:[
+    {d:'6/1 一',t:'Ch10 傳染病概念、流行動力學',rest:false},
+    {d:'6/2 二',t:'Ch10 預防接種時程（精讀）',rest:false},
+    {d:'6/3 三',t:'Ch10 預防接種時程（複習）',rest:false},
+    {d:'6/4 四',t:'Ch10 重要傳染病（腸病毒、結核）',rest:false},
+    {d:'6/5 五',t:'Ch10 重要傳染病（COVID、登革熱）',rest:false},
+    {d:'6/6 六',t:'Ch10 章末題庫（最厚一章）',rest:false},
+    {d:'6/7 日',t:'Ch02 行政組織、Ch03 流行病學',rest:false}
+  ],tasks:['預防接種時程表（活性減毒vs死菌）','傳染病通報時效（第一二三四類）','登革熱、結核、HIV、COVID-19最新政策'],tip:'這週是最重要的一週，每年至少 8-12 題在這裡。寧可慢也要把預防接種時程的數字背熟'},
+
+  {tag:'r1',label:'第5週',title:'Ch12 職業衛生 ＋ Ch13 環境食品 ＋ 機動補強',start:'2026-06-08',days:[
+    {d:'6/8 一',t:'Ch12 職業衛生（職安法數字）',rest:false},
+    {d:'6/9 二',t:'Ch13 環境衛生與食品衛生重點',rest:false},
+    {d:'6/10 三',t:'Ch11 學校衛生（快速掃過）',rest:false},
+    {d:'6/11 四',t:'Ch01 緒論、WHO 簡要',rest:false},
+    {d:'6/12 五',t:'第一輪未掌握章節回讀',rest:false},
+    {d:'6/13 六',t:'整本書錯題重做',rest:false},
+    {d:'6/14 日',t:'★ 第一輪結束，整理錯題清單',rest:false}
+  ],tasks:['職安法第19條（高溫）、第22條（醫護）、第37條（通報）','HACCP、CAS、GMP差別','食物中毒通報時效24小時'],tip:'這週是收尾，重點是把錯題整理成清單，準備進入第二輪實戰演練'},
+
+  {tag:'r2',label:'第6週',title:'第二輪：考古題實戰演練',start:'2026-06-15',days:[
+    {d:'6/15 一',t:'109年考古題實戰（限時60分）',rest:false},
+    {d:'6/16 二',t:'109年錯題回書找頁碼複習',rest:false},
+    {d:'6/17 三',t:'111年考古題實戰',rest:false},
+    {d:'6/18 四',t:'111年錯題回書複習',rest:false},
+    {d:'6/19 五',t:'112年考古題實戰',rest:false},
+    {d:'6/20 六',t:'112年錯題回書＋題庫總複習',rest:false},
+    {d:'6/21 日',t:'113年考古題實戰＋錯題',rest:false}
+  ],tasks:['每天嚴格計時 60 分鐘模擬考試','錯題立即回書找頁碼，並用螢光筆標註','記錄每年答對率，找出弱點主題'],tip:'用此網站「考古題庫」功能，可以隨機抽題、自動計分、收藏錯題'},
+
+  {tag:'final',label:'第7週',title:'最後衝刺（含考試日）',start:'2026-06-22',days:[
+    {d:'6/22 一',t:'114年考古題實戰',rest:false},
+    {d:'6/23 二',t:'弱點主題集中複習（前6週累積）',rest:false},
+    {d:'6/24 三',t:'時事政策最新異動查詢',rest:false},
+    {d:'6/25 四',t:'錯題本最後一輪重做',rest:false},
+    {d:'6/26 五',t:'只看筆記與重點，不做新題',rest:false},
+    {d:'6/27 六',t:'休息＋確認試場交通、入場證',rest:false},
+    {d:'6/28 日',t:'★ 考試日｜下午3:00 中信國際高中',rest:false}
+  ],tasks:['考前一週不要熬夜','備齊2B鉛筆、橡皮擦、入場證、身分證','早一小時到試場（最晚2:45進場）'],tip:'考試前一晚請好好睡覺，6/28 中午前抵達新營'}
+];
+
+function todayStr(){const d=new Date();return d.toISOString().split('T')[0];}
+function renderPlan(){
+  let html='';let totalDone=0,daysDone=0;
+  PLAN.forEach((w,wi)=>{
+    let dayHtml='';
+    w.days.forEach((day,di)=>{
+      const key=`${wi}_${di}`;
+      const date=new Date(w.start);date.setDate(date.getDate()+di);
+      const dStr=date.toISOString().split('T')[0];
+      const isDone=store.planDays[key];
+      const isToday=todayStr()===dStr;
+      if(isDone)totalDone++;
+      const cls=(isDone?' done':'')+(isToday?' today':'')+(day.rest?' rest':'');
+      dayHtml+=`<div class="day${cls}" onclick="togglePlan('${key}')"><div class="dt">${date.getMonth()+1}/${date.getDate()}</div><div class="d">${day.d.split(' ')[1]}</div><div class="t">${day.t}</div></div>`;
+    });
+    let taskHtml=w.tasks.map(t=>`<div class="task"><span class="i">▸</span>${t}</div>`).join('');
+    html+=`<div class="week" id="week-${wi}"><div class="week-h" onclick="toggleWeek(${wi})"><span class="tag tag-${w.tag}">${w.label}</span><div class="t">${w.title}</div><div class="d">${formatRange(w.start,w.days.length)}</div><span class="ch">▾</span></div><div class="week-b"><div class="day-grid">${dayHtml}</div><div class="tasks">${taskHtml}</div><div class="tip">💡 ${w.tip}</div></div></div>`;
+  });
+  document.getElementById('plan-container').innerHTML=html;
+  document.getElementById('stat-tasks').textContent=totalDone;
+  const planStartTime=PLAN_START.getTime();
+  const now=new Date().getTime();
+  const elapsed=Math.max(0,Math.floor((now-planStartTime)/86400000));
+  document.getElementById('stat-days').textContent=Math.min(elapsed,49);
+}
+function formatRange(start,days){
+  const s=new Date(start);
+  const e=new Date(start);e.setDate(e.getDate()+days-1);
+  return `${s.getMonth()+1}/${s.getDate()} – ${e.getMonth()+1}/${e.getDate()}`;
+}
+function toggleWeek(i){document.getElementById('week-'+i).classList.toggle('open');}
+function togglePlan(k){store.planDays[k]=!store.planDays[k];save();renderPlan();}
+PLAN.forEach((_,i)=>{if(i<3)setTimeout(()=>document.getElementById('week-'+i)?.classList.add('open'),50);});
+
+const TOPIC_SEL=document.getElementById('qz-topic');
+TOPICS.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;TOPIC_SEL.appendChild(o);});
+
+let currentQuiz={questions:[],answers:[],idx:0};
+function startQuiz(){
+  const yr=document.getElementById('qz-year').value;
+  const tp=document.getElementById('qz-topic').value;
+  const md=document.getElementById('qz-mode').value;
+  const cnt=parseInt(document.getElementById('qz-count').value)||10;
+  let pool=[...QUESTIONS];
+  if(yr!=='all')pool=pool.filter(q=>q.y==yr);
+  if(tp&&tp!=='全部')pool=pool.filter(q=>q.t===tp);
+  if(md==='bookmarked'){pool=pool.filter(q=>store.bookmarks.includes(q.y+'_'+q.n));}
+  if(md==='wrong'){pool=pool.filter(q=>store.wrongQuestions.includes(q.y+'_'+q.n));}
+  if(pool.length===0){alert('沒有符合條件的題目');return;}
+  if(md==='random')pool=pool.sort(()=>Math.random()-0.5);
+  pool=pool.slice(0,cnt);
+  currentQuiz={questions:pool,answers:new Array(pool.length).fill(null),idx:0};
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const total=currentQuiz.questions.length;
+  if(total===0){document.getElementById('quiz-area').innerHTML='<div class="card" style="text-align:center;padding:2rem">點擊「開始作答」載入題目</div>';return;}
+  const q=currentQuiz.questions[currentQuiz.idx];
+  const ans=currentQuiz.answers[currentQuiz.idx];
+  const correct=currentQuiz.answers.filter((a,i)=>a===currentQuiz.questions[i].a).length;
+  const answered=currentQuiz.answers.filter(a=>a!==null).length;
+  const acc=answered>0?Math.round(correct/answered*100):0;
+  const qid=q.y+'_'+q.n;
+  const isBm=store.bookmarks.includes(qid);
+  let opts='';
+  ['A','B','C','D'].forEach((L,i)=>{
+    let cls='q-option';
+    if(ans){
+      cls+=' disabled';
+      if(L===q.a)cls+=' correct';
+      else if(L===ans)cls+=' wrong';
+    }else if(ans===L){cls+=' selected';}
+    opts+=`<div class="${cls}" onclick="answer('${L}')"><span class="letter">${L}</span><span>${q.o[i]}</span></div>`;
+  });
+  let explain='';
+  if(ans){
+    const isRight=ans===q.a;
+    explain=`<div class="q-explain show ${isRight?'':'wrong'}">${isRight?'✅ 答對了！':'❌ 答錯了。'}正確答案：<strong>${q.a}</strong>　${q.o[['A','B','C','D'].indexOf(q.a)]}</div>`;
+  }
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="score-bar">
+      <div class="stats"><span>第 <strong>${currentQuiz.idx+1}</strong>/${total} 題</span><span>答對 <strong>${correct}</strong>/${answered}</span><span>答對率 <strong>${acc}%</strong></span></div>
+      <div><button class="btn" onclick="prevQ()">←上一題</button> <button class="btn" onclick="nextQ()">下一題→</button></div>
+    </div>
+    <div class="quiz-question">
+      <div class="q-head">
+        <div><span class="year-pill">${q.y}年第${q.n}題</span><span class="q-tag">${q.t}</span></div>
+        <span class="bookmark${isBm?' active':''}" onclick="toggleBm('${qid}')">⭐</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">${opts}</div>
+      ${explain}
+    </div>
+    ${currentQuiz.idx===total-1&&answered===total?`<div class="exam-summary card"><div class="big">${correct}/${total}</div><div class="lbl">答對率 ${Math.round(correct/total*100)}%</div><button class="btn btn-primary" style="margin-top:14px" onclick="startQuiz()">再來一輪</button></div>`:''}
+  `;
+  document.getElementById('stat-quiz').textContent=Object.keys(store.quizAnswers).length;
+  const allAnswers=Object.values(store.quizAnswers);
+  const allCorrect=allAnswers.filter(a=>a.correct).length;
+  document.getElementById('stat-acc').textContent=allAnswers.length>0?Math.round(allCorrect/allAnswers.length*100)+'%':'0%';
+}
+
+function answer(L){
+  if(currentQuiz.answers[currentQuiz.idx]!==null)return;
+  currentQuiz.answers[currentQuiz.idx]=L;
+  const q=currentQuiz.questions[currentQuiz.idx];
+  const qid=q.y+'_'+q.n;
+  const correct=L===q.a;
+  store.quizAnswers[qid]={answer:L,correct,date:Date.now()};
+  if(!correct&&!store.wrongQuestions.includes(qid))store.wrongQuestions.push(qid);
+  if(correct&&store.wrongQuestions.includes(qid))store.wrongQuestions=store.wrongQuestions.filter(x=>x!==qid);
+  save();renderQuiz();
+}
+function prevQ(){if(currentQuiz.idx>0){currentQuiz.idx--;renderQuiz();}}
+function nextQ(){if(currentQuiz.idx<currentQuiz.questions.length-1){currentQuiz.idx++;renderQuiz();}}
+function toggleBm(qid){
+  const i=store.bookmarks.indexOf(qid);
+  if(i>=0)store.bookmarks.splice(i,1);
+  else store.bookmarks.push(qid);
+  save();renderQuiz();
+}
+function resetQuizStats(){
+  if(!confirm('確定要清除所有作答紀錄嗎？（收藏題、錯題本也會清空）'))return;
+  store.quizAnswers={};store.bookmarks=[];store.wrongQuestions=[];save();renderQuiz();
+}
+
+renderPlan();
+renderQuiz();
+</script>
+</body>
+</html>
