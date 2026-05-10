@@ -820,10 +820,17 @@ function getWrongReasons(q){
   letters.forEach((L,i)=>{
     if(L===q.a)return;// skip correct answer
     const opt=q.o[i];
-    // Extract the parenthetical explanation if it exists
-    const m=opt.match(/（(.+?)）$|（(.+?)）/);
-    const explanation=m?(m[1]||m[2]):'此選項內容有誤，請對照正確選項理解差異';
-    reasons.push({L,opt:opt.replace(/（.+?）/g,'').trim(),reason:explanation});
+    let explanation;
+    // 優先使用 e 欄位（AI生成的教育性說明）
+    if(q.e&&q.e[i]&&q.e[i]!=='正確答案'){
+      explanation=q.e[i];
+    } else {
+      // 其次從括號中提取說明
+      const m=opt.match(/（([^）]+)）/);
+      explanation=m?m[1]:'此選項內容有誤，請對照正確選項理解差異';
+    }
+    // 顯示選項文字時去除括號說明
+    reasons.push({L,opt:opt.replace(/（[^）]+）/g,'').trim(),reason:explanation});
   });
   return reasons;
 }
@@ -854,19 +861,19 @@ function renderQuiz(){
   let explainHtml='';
   if(ans){
     const isOk=ans===q.a;
-    let wrHtml='';
-    if(!isOk){
-      const reasons=getWrongReasons(q);
-      wrHtml=`<div class="wrong-reasons"><h5>各選項錯誤原因</h5>`;
-      reasons.forEach(r=>{
-        if(r.L===q.a)return;
-        wrHtml+=`<div class="wr-item"><span class="li">${r.L}.</span><span><strong>${r.opt}</strong>──${r.reason}</span></div>`;
-      });
-      // Also explain why the correct answer is right
-      const corrOpt=q.o[letters.indexOf(q.a)];
-      wrHtml+=`<div class="wr-item" style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(0,0,0,0.08)"><span class="li">✓${q.a}</span><span style="color:var(--grn-text)"><strong>${corrOpt.replace(/（.+?）/g,'').trim()}</strong>──正確答案</span></div>`;
-      wrHtml+=`</div>`;
-    }
+    const reasons=getWrongReasons(q);
+    // 始終顯示所有選項說明（含正確答案）
+    let wrHtml=`<div class="wrong-reasons"><h5>各選項說明</h5>`;
+    letters.forEach((L,i)=>{
+      const opt=q.o[i].replace(/（[^）]+）/g,'').trim();
+      if(L===q.a){
+        wrHtml+=`<div class="wr-item"><span class="li">✓${L}</span><span style="color:var(--grn-text)"><strong>${opt}</strong>──正確答案</span></div>`;
+      } else {
+        const r=reasons.find(x=>x.L===L);
+        wrHtml+=`<div class="wr-item"><span class="li">${L}.</span><span><strong>${opt}</strong>──${r?r.reason:'此選項有誤'}</span></div>`;
+      }
+    });
+    wrHtml+=`</div>`;
     explainHtml=`<div class="q-explain show ${isOk?'ok-exp':'ng-exp'}">
       ${isOk?'✅ 答對了！正確答案為 <strong>'+q.a+'</strong>':'❌ 答錯了。正確答案為 <strong>'+q.a+'</strong>'}
       ${wrHtml}
