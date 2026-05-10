@@ -922,10 +922,9 @@ function resetStats(){
   store.qAns={};store.bm=[];store.wrong=[];save();renderQuiz();updateStats();
 }
 
-// Topic selector
-const TOPICS=['全部','預防接種','傳染病','長照','中老年保健','健康促進','流行病學','婦幼健康','慢性病','癌症篩檢','健康政策','法規','食品衛生','環境衛生','職業衛生','急救','心理衛生','社區評估','社區健康','衛生教育','學校衛生','成人保健','護理','安寧療護','家庭護理'];
+// Topic selector (TOPICS is defined in questions_data.js)
 const tpSel=document.getElementById('qz-tp');
-TOPICS.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;tpSel.appendChild(o);});
+if(tpSel){TOPICS.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;tpSel.appendChild(o);});}
 
 // ── DOWNLOAD TODAY'S QUIZ ──────────────────────────────
 function dlDayQuiz(dateStr){
