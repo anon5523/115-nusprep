@@ -302,7 +302,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","
 <!-- ══ QUIZ ══════════════════════════════════════════════ -->
 <div class="sec" id="s-quiz">
   <div class="sec-title"><span class="ico">📝</span>考古題庫</div>
-  <div class="note">資料來源：臺南市政府衛生局護理人員甄試專區・已收錄 105–114 年共 <strong>301 題</strong>・每題附正確答案與錯誤選項原因說明</div>
+  <div class="note note-warn">⚠️ <strong>重要提醒</strong>：本題庫由 AI 從歷屆考古題 PDF 整理，雖盡力核對，但<strong>不保證 100% 正確</strong>。練習時若發現答案有疑義，請以<a href="https://health.tainan.gov.tw/list.asp?orcaid=49027783-987D-4D70-A08E-2FB99422F8E0" target="_blank" style="color:var(--amb-text);font-weight:700">臺南市衛生局公告之官方答案</a>為準。括號內錯因為輔助提示，並非官方解析。</div>
+  <div class="note">資料來源：臺南市政府衛生局護理人員甄試專區・收錄 105–114 年共 <strong>301 題</strong></div>
 
   <div class="plan-qz-bar">
     <h4>📚 依讀書計畫快速選題</h4>
@@ -820,17 +821,12 @@ function getWrongReasons(q){
   letters.forEach((L,i)=>{
     if(L===q.a)return;// skip correct answer
     const opt=q.o[i];
-    let explanation;
-    // 優先使用 e 欄位（AI生成的教育性說明）
-    if(q.e&&q.e[i]&&q.e[i]!=='正確答案'){
-      explanation=q.e[i];
-    } else {
-      // 其次從括號中提取說明
-      const m=opt.match(/（([^）]+)）/);
-      explanation=m?m[1]:'此選項內容有誤，請對照正確選項理解差異';
-    }
-    // 顯示選項文字時去除括號說明
-    reasons.push({L,opt:opt.replace(/（[^）]+）/g,'').trim(),reason:explanation});
+    // Try to extract parenthetical explanation that explains why this option is wrong.
+    // Heuristic: look for patterns like "（應為...）", "（實際...）", "（錯誤...）", "（不...）"
+    // or any 括號 that starts with hint words.
+    const m=opt.match(/（(實際[^）]*|應[^）]*|不[^）]*|錯[^）]*|為[^）]*|此[^）]*|無[^）]*|有[^）]*|沒[^）]*|可[^）]*|會[^）]*|並[^）]*|屬[^）]*|是[^）]*|新[^）]*|大[^）]*|超[^）]*|低[^）]*|高[^）]*)）/);
+    let cleanOpt=opt.replace(/（[^）]*）/g,'').trim();
+    reasons.push({L,opt:cleanOpt,reason:m?m[1]:null});
   });
   return reasons;
 }
@@ -861,19 +857,28 @@ function renderQuiz(){
   let explainHtml='';
   if(ans){
     const isOk=ans===q.a;
-    const reasons=getWrongReasons(q);
-    // 始終顯示所有選項說明（含正確答案）
-    let wrHtml=`<div class="wrong-reasons"><h5>各選項說明</h5>`;
-    letters.forEach((L,i)=>{
-      const opt=q.o[i].replace(/（[^）]+）/g,'').trim();
-      if(L===q.a){
-        wrHtml+=`<div class="wr-item"><span class="li">✓${L}</span><span style="color:var(--grn-text)"><strong>${opt}</strong>──正確答案</span></div>`;
-      } else {
-        const r=reasons.find(x=>x.L===L);
-        wrHtml+=`<div class="wr-item"><span class="li">${L}.</span><span><strong>${opt}</strong>──${r?r.reason:'此選項有誤'}</span></div>`;
+    let wrHtml='';
+    if(!isOk){
+      const reasons=getWrongReasons(q);
+      // Check if any options have actual explanations
+      const hasAnyExplanation=reasons.some(r=>r.reason);
+      wrHtml=`<div class="wrong-reasons"><h5>各選項說明</h5>`;
+      // Show all 4 options with mark
+      ['A','B','C','D'].forEach((L,i)=>{
+        const cleanOpt=q.o[i].replace(/（[^）]*）/g,'').trim();
+        if(L===q.a){
+          wrHtml+=`<div class="wr-item"><span class="li" style="color:var(--grn-text)">✓${L}</span><span style="color:var(--grn-text)"><strong>${cleanOpt}</strong> ─ 正確答案</span></div>`;
+        }else{
+          const r=reasons.find(x=>x.L===L);
+          const note=r&&r.reason?` ─ ${r.reason}`:'';
+          wrHtml+=`<div class="wr-item"><span class="li">✗${L}</span><span><strong>${cleanOpt}</strong>${note}</span></div>`;
+        }
+      });
+      if(!hasAnyExplanation){
+        wrHtml+=`<div style="margin-top:8px;padding:6px 8px;background:rgba(0,0,0,0.04);border-radius:5px;font-size:11px;color:var(--text2)">💡 此題暫無詳細錯因說明，請對照正確答案複習相關章節</div>`;
       }
-    });
-    wrHtml+=`</div>`;
+      wrHtml+=`</div>`;
+    }
     explainHtml=`<div class="q-explain show ${isOk?'ok-exp':'ng-exp'}">
       ${isOk?'✅ 答對了！正確答案為 <strong>'+q.a+'</strong>':'❌ 答錯了。正確答案為 <strong>'+q.a+'</strong>'}
       ${wrHtml}
